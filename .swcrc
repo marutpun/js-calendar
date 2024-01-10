@@ -1,0 +1,12 @@
+{
+  "jsc": {
+    //build
+    "minify": {
+      "compress": {
+        "unused": true
+      },
+      "mangle": true
+    }
+  },
+  "minify": true
+}
