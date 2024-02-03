@@ -94,9 +94,9 @@ function tableBody(year) {
  */
 
 function tableStyle() {
-  const weekendRow = document.querySelectorAll('tbody tr');
+  const weekendRow = Array.from(document.querySelectorAll('tbody tr'));
   for (let i = 0; i < weekendRow.length; i++) {
-    const allCell = weekendRow[i].querySelectorAll('td');
+    const allCell = Array.from(weekendRow[i].querySelectorAll('td'));
 
     for (let k = 0; k < allCell.length; k++) {
       if (k == 7 || k == 8 || k == 14 || k == 15 || k == 21 || k == 22 || k == 28 || k == 29) {
@@ -113,11 +113,14 @@ function tableStyle() {
  */
 
 function today() {
-  const monthRow = document.querySelectorAll('tbody tr');
+  const monthRow = Array.from(document.querySelectorAll('tbody tr'));
 
   for (let i = 0; i < monthRow.length; i++) {
+    const noOfPreCell = new Date(currentYear, i, 1).getDay();
     if (i === currentMonth) {
-      monthRow[i].querySelectorAll('td')[currentDate + 1].classList.add('blink182');
+      const selectedCell = Array.from(monthRow[i].querySelectorAll('td'))[noOfPreCell + currentDate];
+      selectedCell.classList.add('blink182');
+      selectedCell.removeAttribute('style');
     }
   }
 }
