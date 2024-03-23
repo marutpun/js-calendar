@@ -7,12 +7,14 @@
     "start": "vite",
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "purge": "purgecss --config purgecss.config.js --output dist/assets/"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@fullhuman/postcss-purgecss": "^5.0.0",
     "typescript": "^5.4.3",
     "vite": "^5.2.3"
   }
