@@ -1,85 +1,74 @@
-/**
- * Global Constants
- */
-const date = new Date();
-const currentDate = date.getDate();
-const currentMonth = date.getMonth();
-const currentYear = date.getFullYear();
-const daysThai = ['อา', 'จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส'];
-const monthsThai = ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'];
-const totalDays = 37; // 31 Days + pre,post 7 days
-const bgDummy = `oklch(32.11% 0 0)`;
-const bgWeekend = `oklch(92.8% 0 0)`;
+/* Global Constants */
+const date: Date = new Date();
+const currentDate: number = date.getDate();
+const currentMonth: number = date.getMonth();
+const currentYear: number = date.getFullYear();
+const daysOfWeek: string[] = ['อา', 'จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส'];
+const monthsThai: string[] = ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'];
+const totalDays: number = 37; // 31 Days + pre,post 7 days
+const bgDummy: string = `oklch(32.11% 0 0)`;
+const bgWeekend: string = `oklch(92.8% 0 0)`;
 
-const mainTitle = document.querySelector('h1');
-const mainTable = document.querySelector('table');
+const headerTitle = document.querySelector('h1')! as HTMLHeadingElement;
+const mainTable = document.querySelector('table')! as HTMLTableElement;
 
-/**
- * Header
- */
-function header(year) {
-  mainTitle.innerText = `Calendar ${year}`;
+/* Header */
+function heading(year: number) {
+  headerTitle.innerText = `Calendar ${year + 543}`;
 }
 
-/**
- * Table Header
- */
-function tableHeader() {
-  const tableHeader = document.createElement('thead');
-  const tableHeaderRow = document.createElement('tr');
+/* Table Header Init */
+function tableHeaderInit() {
+  const tableHead = document.createElement('thead') as HTMLTableSectionElement;
+  const tableHeaderRow = document.createElement('tr') as HTMLTableRowElement;
+  const tableHeaderDummy = document.createElement('th') as HTMLTableCellElement;
 
-  // Dummy Header
-  const tableHeaderDummy = document.createElement('th');
   tableHeaderDummy.innerText = '#';
   tableHeaderRow.appendChild(tableHeaderDummy);
 
   // Header with Day
-  for (let i = 0; i < totalDays; i++) {
-    const tableHeaderCell = document.createElement('th');
-    tableHeaderCell.innerText = daysThai[i % 7];
-
+  for (let i: number = 0; i < totalDays; i++) {
+    const tableHeaderCell = document.createElement('th') as HTMLTableCellElement;
+    tableHeaderCell.innerText = daysOfWeek[i % 7];
     tableHeaderRow.appendChild(tableHeaderCell);
   }
 
-  tableHeader.appendChild(tableHeaderRow);
-  mainTable.appendChild(tableHeader);
+  tableHead.appendChild(tableHeaderRow);
+  mainTable.appendChild(tableHead);
 }
 
-/**
- * Table Body
- */
-function tableBody(year) {
-  const tableBody = document.createElement('tbody');
+/* Table Body Init*/
+function tableBodyInit(year: number) {
+  const tableBody = document.createElement('tbody') as HTMLTableSectionElement;
 
   // Loop row for 12 months
-  for (let i = 0; i < monthsThai.length; i++) {
-    const startingDay = new Date(year, i, 1).getDay();
-    const numberOfDateInEachMonth = new Date(year, i + 1, 0).getDate();
+  for (let i: number = 0; i < monthsThai.length; i++) {
+    const startingDay: number = new Date(year, i, 1).getDay();
+    const numberOfDateInEachMonth: number = new Date(year, i + 1, 0).getDate();
 
     // Month Title
-    const tableBodyRow = document.createElement('tr');
-    const monthTitleCell = document.createElement('td');
+    const tableBodyRow = document.createElement('tr') as HTMLTableRowElement;
+    const monthTitleCell = document.createElement('td') as HTMLTableCellElement;
     monthTitleCell.innerText = monthsThai[i];
     tableBodyRow.appendChild(monthTitleCell);
 
     // Month Pre-dummy
-    for (let k = 0; k < startingDay; k++) {
-      const monthDummyCell = document.createElement('td');
+    for (let k: number = 0; k < startingDay; k++) {
+      const monthDummyCell = document.createElement('td') as HTMLTableCellElement;
       monthDummyCell.style.backgroundColor = bgDummy;
       tableBodyRow.appendChild(monthDummyCell);
     }
 
     // Month Day
-    for (let k = 1; k <= numberOfDateInEachMonth; k++) {
-      const monthDayCell = document.createElement('td');
-      monthDayCell.innerText = k;
+    for (let k: number = 1; k <= numberOfDateInEachMonth; k++) {
+      const monthDayCell = document.createElement('td') as HTMLTableCellElement;
+      monthDayCell.innerText = k.toString();
       tableBodyRow.appendChild(monthDayCell);
     }
 
     // Month Post-dummy
-    // 37 - preDummyCell - startingIndex (+1)
     for (let k = 1; k < totalDays - numberOfDateInEachMonth - startingDay + 1; k++) {
-      const monthDayCell = document.createElement('td');
+      const monthDayCell = document.createElement('td') as HTMLTableCellElement;
       monthDayCell.style.backgroundColor = bgDummy;
       tableBodyRow.appendChild(monthDayCell);
     }
@@ -89,16 +78,13 @@ function tableBody(year) {
   }
 }
 
-/**
- * Table Styling
- */
+/* Table Styling */
+function tableStyleWeekend() {
+  const weekendRow = Array.prototype.slice.call(document.querySelectorAll('tbody tr')!, 0);
+  for (let i: number = 0; i < weekendRow.length; i++) {
+    const allCell = Array.prototype.slice.call(weekendRow[i].querySelectorAll('td')!, 0);
 
-function tableStyle() {
-  const weekendRow = Array.from(document.querySelectorAll('tbody tr'));
-  for (let i = 0; i < weekendRow.length; i++) {
-    const allCell = Array.from(weekendRow[i].querySelectorAll('td'));
-
-    for (let k = 0; k < allCell.length; k++) {
+    for (let k: number = 0; k < allCell.length; k++) {
       if (k == 7 || k == 8 || k == 14 || k == 15 || k == 21 || k == 22 || k == 28 || k == 29) {
         allCell[k].style.backgroundColor = bgWeekend;
       } else if ((k == 1 && allCell[k].innerText !== '') || (k == 35 && allCell[k].innerText !== '') || (k == 36 && allCell[k].innerText !== '')) {
@@ -108,25 +94,23 @@ function tableStyle() {
   }
 }
 
-/**
- * Blink Today
- */
+/* Today */
+function todayBlink(date: number, month: number, year: number) {
+  const monthRow = Array.prototype.slice.call(document.querySelectorAll('tbody tr')!, 0);
 
-function today() {
-  const monthRow = Array.from(document.querySelectorAll('tbody tr'));
+  for (let i: number = 0; i < monthRow.length; i++) {
+    const noOfPreCell: number = new Date(year, i, 1).getDay();
 
-  for (let i = 0; i < monthRow.length; i++) {
-    const noOfPreCell = new Date(currentYear, i, 1).getDay();
-    if (i === currentMonth) {
-      const selectedCell = Array.from(monthRow[i].querySelectorAll('td'))[noOfPreCell + currentDate];
+    if (i === month) {
+      const selectedCell = monthRow[i].querySelectorAll('td')[noOfPreCell + date] as HTMLTableCellElement;
       selectedCell.classList.add('blink182');
       selectedCell.removeAttribute('style');
     }
   }
 }
 
-header(currentYear);
-tableHeader();
-tableBody(currentYear);
-tableStyle();
-today();
+heading(currentYear);
+tableHeaderInit();
+tableBodyInit(currentYear);
+tableStyleWeekend();
+todayBlink(currentDate, currentMonth, currentYear);
