@@ -1,75 +1,67 @@
-/* Global Constants */
-const date: Date = new Date();
-const currentDate: number = date.getDate();
-const currentMonth: number = date.getMonth();
-const currentYear: number = date.getFullYear();
-const daysOfWeek: string[] = ['อา', 'จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส'];
-const monthsThai: string[] = ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'];
-const totalDays: number = 37; // 31 Days + pre,post 7 days
-const bgDummy: string = `oklch(32.11% 0 0)`;
-const bgWeekend: string = `oklch(92.8% 0 0)`;
+const dt: Date = new Date();
+const currentDate: number = dt.getDate();
+const currentMonth: number = dt.getMonth();
+const currentYear = dt.getFullYear();
+const dayOfWeek: readonly string[] = ['อา', 'จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส'];
+const months: readonly string[] = ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'];
 
-const headerTitle = document.querySelector('h1')! as HTMLHeadingElement;
+const totalDays: number = 37;
+const weekendBg: string = `oklch(92.8% 0 0)`;
+
 const mainTable = document.querySelector('table')! as HTMLTableElement;
 
-/* Header */
-function heading(year: number) {
-  headerTitle.innerText = `Calendar ${year + 543}`;
+function setYearHeading(year: number) {
+  document.querySelector<HTMLHeadingElement>('h1')!.innerText = `Calendar ${year + 543}`;
 }
 
-/* Table Header Init */
 function tableHeaderInit() {
-  const tableHead = document.createElement('thead') as HTMLTableSectionElement;
+  const tableHeader = document.createElement('thead') as HTMLTableSectionElement;
   const tableHeaderRow = document.createElement('tr') as HTMLTableRowElement;
   const tableHeaderDummy = document.createElement('th') as HTMLTableCellElement;
-
   tableHeaderDummy.innerText = '#';
   tableHeaderRow.appendChild(tableHeaderDummy);
 
-  // Header with Day
   for (let i: number = 0; i < totalDays; i++) {
     const tableHeaderCell = document.createElement('th') as HTMLTableCellElement;
-    tableHeaderCell.innerText = daysOfWeek[i % 7];
+    tableHeaderCell.innerText = dayOfWeek[i % 7];
     tableHeaderRow.appendChild(tableHeaderCell);
   }
 
-  tableHead.appendChild(tableHeaderRow);
-  mainTable.appendChild(tableHead);
+  tableHeader.appendChild(tableHeaderRow);
+  mainTable.appendChild(tableHeader);
 }
 
-/* Table Body Init*/
 function tableBodyInit(year: number) {
   const tableBody = document.createElement('tbody') as HTMLTableSectionElement;
 
-  // Loop row for 12 months
-  for (let i: number = 0; i < monthsThai.length; i++) {
-    const startingDay: number = new Date(year, i, 1).getDay();
-    const numberOfDateInEachMonth: number = new Date(year, i + 1, 0).getDate();
+  for (let i: number = 0; i < months.length; i++) {
+    const startingDay = new Date(year, i, 1).getDay();
+    const numberOfDateInEachMonth = new Date(year, i + 1, 0).getDate();
 
-    // Month Title
+    // Month - Month Title
     const tableBodyRow = document.createElement('tr') as HTMLTableRowElement;
     const monthTitleCell = document.createElement('td') as HTMLTableCellElement;
-    monthTitleCell.innerText = monthsThai[i];
+    monthTitleCell.innerText = months[i];
     tableBodyRow.appendChild(monthTitleCell);
 
-    // Month Pre-dummy
+    // Month - Dummy Day
     for (let k: number = 0; k < startingDay; k++) {
       const monthDummyCell = document.createElement('td') as HTMLTableCellElement;
-      monthDummyCell.style.backgroundColor = bgDummy;
+      monthDummyCell.style.backgroundColor = `oklch(32.11% 0 0)`;
       tableBodyRow.appendChild(monthDummyCell);
     }
 
-    // Month Day
+    // Month - Day
     for (let k: number = 1; k <= numberOfDateInEachMonth; k++) {
       const monthDayCell = document.createElement('td') as HTMLTableCellElement;
       monthDayCell.innerText = k.toString();
       tableBodyRow.appendChild(monthDayCell);
     }
 
-    // Month Post-dummy
-    for (let k = 1; k < totalDays - numberOfDateInEachMonth - startingDay + 1; k++) {
+    // Month - Post Dummy
+    for (let k: number = 1; k < totalDays - numberOfDateInEachMonth - startingDay + 1; k++) {
       const monthDayCell = document.createElement('td') as HTMLTableCellElement;
-      monthDayCell.style.backgroundColor = bgDummy;
+      monthDayCell.style.backgroundColor = `oklch(32.11% 0 0)`;
       tableBodyRow.appendChild(monthDayCell);
     }
 
@@ -78,39 +70,38 @@ function tableBodyInit(year: number) {
   }
 }
 
-/* Table Styling */
-function tableStyleWeekend() {
-  const weekendRow = Array.prototype.slice.call(document.querySelectorAll('tbody tr')!, 0);
+function tableStyle() {
+  const weekendRow: HTMLTableRowElement[] = Array.prototype.slice.call(document.querySelectorAll('tbody tr')!, 0);
+
   for (let i: number = 0; i < weekendRow.length; i++) {
-    const allCell = Array.prototype.slice.call(weekendRow[i].querySelectorAll('td')!, 0);
+    const allCell: HTMLTableCellElement[] = Array.prototype.slice.call(weekendRow[i].querySelectorAll('td')!, 0);
 
     for (let k: number = 0; k < allCell.length; k++) {
       if (k == 7 || k == 8 || k == 14 || k == 15 || k == 21 || k == 22 || k == 28 || k == 29) {
-        allCell[k].style.backgroundColor = bgWeekend;
+        allCell[k].style.backgroundColor = weekendBg;
       } else if ((k == 1 && allCell[k].innerText !== '') || (k == 35 && allCell[k].innerText !== '') || (k == 36 && allCell[k].innerText !== '')) {
-        allCell[k].style.backgroundColor = bgWeekend;
+        allCell[k].style.backgroundColor = weekendBg;
       }
     }
   }
 }
 
-/* Today */
 function todayBlink(date: number, month: number, year: number) {
-  const monthRow = Array.prototype.slice.call(document.querySelectorAll('tbody tr')!, 0);
+  const monthRow: HTMLTableRowElement[] = Array.prototype.slice.call(document.querySelectorAll('tbody tr')!, 0);
 
   for (let i: number = 0; i < monthRow.length; i++) {
     const noOfPreCell: number = new Date(year, i, 1).getDay();
 
     if (i === month) {
-      const selectedCell = monthRow[i].querySelectorAll('td')[noOfPreCell + date] as HTMLTableCellElement;
+      const selectedCell = monthRow[i].querySelectorAll('td')[noOfPreCell + date]! as HTMLTableCellElement;
       selectedCell.classList.add('blink182');
       selectedCell.removeAttribute('style');
     }
   }
 }
 
-heading(currentYear);
+setYearHeading(currentYear);
 tableHeaderInit();
 tableBodyInit(currentYear);
-tableStyleWeekend();
+tableStyle();
 todayBlink(currentDate, currentMonth, currentYear);
