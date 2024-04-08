@@ -1,5 +1,5 @@
 {
-  "name": "parw3o",
+  "name": "js-calendar",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -7,15 +7,13 @@
     "start": "vite",
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview",
-    "purge": "purgecss --config purgecss.config.js --output dist/assets/"
+    "preview": "vite preview"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@fullhuman/postcss-purgecss": "^5.0.0",
-    "typescript": "^5.4.3",
-    "vite": "^5.2.3"
+    "typescript": "^5.4.4",
+    "vite": "^5.2.8"
   }
 }
