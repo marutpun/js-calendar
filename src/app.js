@@ -8,7 +8,6 @@ const bhuddistEraOffset = 543;
 const totalDays = 37;
 const weekendBg = `hsl(223.81 0% 91%)`;
 const dummyBg = `hsl(223.81 0% 20%)`;
-
 const mainTable = document.querySelector('table');
 
 function setYearHeading(year) {
@@ -23,7 +22,7 @@ function createDummyCell() {
 }
 
 function tableHeaderInit() {
-    const tableHeader = document.createElement('thead');
+  const tableHeader = document.createElement('thead');
   const tableHeaderRow = document.createElement('tr');
   const tableHeaderDummy = document.createElement('th');
   const dummyText = document.createTextNode(`#`);
@@ -63,7 +62,7 @@ function tableBodyInit(year) {
     for (let k = 1; k <= numberOfDateInEachMonth; k++) {
       const monthDayCell = document.createElement('td');
       const dateText = document.createTextNode(k.toString());
-      monthDayCell.setAttribute('aria-label', `${k}/${currentMonth + 1}/${currentYear}}`);
+      monthDayCell.setAttribute('aria-label', `${k}/${currentMonth + 1}/${currentYear}`);
       monthDayCell.appendChild(dateText);
       tableBodyRow.appendChild(monthDayCell);
     }
@@ -85,10 +84,10 @@ function weekendStyle() {
     const allCell = Array.prototype.slice.call(weekendRow[i].querySelectorAll('td'), 0);
 
     for (let k = 0; k < allCell.length; k++) {
-      if (k == 7 || k == 8 || k == 14 || k == 15 || k == 21 || k == 22 || k == 28 || k == 29) {
-        allCell[k].style.backgroundColor = weekendBg;
-      } else if ((k == 1 && allCell[k].innerText !== '') || (k == 35 && allCell[k].innerText !== '') || (k == 36 && allCell[k].innerText !== '')) {
-        allCell[k].style.backgroundColor = weekendBg;
+      if (k > 0 && allCell[k].innerText !== '') {
+        if (k % 7 === 0 || k % 7 === 1) {
+          allCell[k].style.backgroundColor = weekendBg;
+        }
       }
     }
   }
@@ -99,11 +98,12 @@ function todayBlink(date, month, year) {
 
   for (let i = 0; i < monthRow.length; i++) {
     const noOfPreCell = new Date(year, i, 1).getDay();
-
     if (i === month) {
       const selectedCell = monthRow[i].querySelectorAll('td')[noOfPreCell + date];
-      selectedCell.classList.add('blink182');
-      selectedCell.removeAttribute('style');
+      if (selectedCell) {
+        selectedCell.classList.add('blink182');
+        selectedCell.removeAttribute('style');
+      }
     }
   }
 }
