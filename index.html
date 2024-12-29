@@ -4,12 +4,126 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Calendar</title>
-    <style>*,:before,:after{box-sizing:inherit}html{box-sizing:border-box;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;font-size:100%;line-height:1.15}html,body{height:100%}::-webkit-selection{color:#000000de;background-color:#cce2ff}::selection{color:#000000de;background-color:#cce2ff}body{color:#000000de;font-smoothing:antialiased;background:#fff;margin:0;padding:0;font-family:Helvetica Neue,Arial,Helvetica,sans-serif;font-size:1rem;line-height:1.5;overflow-x:hidden}.site-heading{color:#000000de;text-align:center;margin:0 0 1rem;padding:0;font-size:2rem;font-weight:700;line-height:1.25}.site-table{box-shadow:none;text-align:center;color:#000000de;border-collapse:separate;border-spacing:0;background:#fff;border:1px solid #22242626;width:100%;margin:1rem 0 0;font-size:.875rem}.site-table thead th{cursor:auto;vertical-align:inherit;background:#f9fafb;border-bottom:1px solid #2224261a;border-left:1px solid #2224261a;font-weight:700}.site-table thead tr>th:first-child{border-left:none}.site-table tr td{border-top:1px solid #2224261a;border-left:1px solid #2224261a}.site-table tr:first-child td{border-top:none}.site-table th,.site-table td{padding:.7rem}.table-scroll{overflow-x:auto}.blink182{animation:3s linear infinite allTheSmallThings}@keyframes allTheSmallThings{0%{background:#006}8%{background:#75006d}17%{background:#b8005f}25%{background:#ea1a4b}33%{background:#ff692e}42%{background:#fa0}50%{background:#ffea00}58%{background:#fa0}67%{background:#ff692e}75%{background:#ea1a4b}83%{background:#b8005f}92%{background:#75006d}to{background:#006}}</style>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.css"
+      integrity="sha512-KXol4x3sVoO+8ZsWPFI/r5KBVB/ssCGB5tsv2nVOKwLg33wTFP3fmnXa47FdSVIshVTgsYk/1734xSk9aFIa4A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <style>
+      body {
+        color: #000000de;
+        background: #fff;
+        margin: 0;
+        padding: 0;
+        font-family: Helvetica Neue, Arial, Helvetica, sans-serif;
+        font-size: 1rem;
+        line-height: 1.5;
+        overflow-x: hidden;
+      }
+      .site-heading {
+        color: #000000de;
+        text-align: center;
+        margin: 0 0 1rem;
+        padding: 0;
+        font-size: 2rem;
+        font-weight: 700;
+        line-height: 1.25;
+      }
+      .site-table {
+        box-shadow: none;
+        text-align: center;
+        color: #000000de;
+        border-collapse: separate;
+        border-spacing: 0;
+        background: #fff;
+        border: 1px solid #22242626;
+        width: 100%;
+        margin: 1rem 0 0;
+        font-size: 0.875rem;
+      }
+      .site-table thead th {
+        cursor: auto;
+        vertical-align: inherit;
+        background: #f9fafb;
+        border-bottom: 1px solid #2224261a;
+        border-left: 1px solid #2224261a;
+        font-weight: 700;
+      }
+      .site-table thead tr > th:first-child {
+        border-left: none;
+      }
+      .site-table tr td {
+        border-top: 1px solid #2224261a;
+        border-left: 1px solid #2224261a;
+      }
+      .site-table tr:first-child td {
+        border-top: none;
+      }
+      .site-table th,
+      .site-table td {
+        padding: 0.7rem;
+      }
+      .table-scroll {
+        overflow-x: auto;
+      }
+      .blink182 {
+        animation: 3s linear infinite allTheSmallThings;
+      }
+      @keyframes allTheSmallThings {
+        0% {
+          background: #006;
+        }
+        8% {
+          background: #75006d;
+        }
+        17% {
+          background: #b8005f;
+        }
+        25% {
+          background: #ea1a4b;
+        }
+        33% {
+          background: #ff692e;
+        }
+        42% {
+          background: #fa0;
+        }
+        50% {
+          background: #ffea00;
+        }
+        58% {
+          background: #fa0;
+        }
+        67% {
+          background: #ff692e;
+        }
+        75% {
+          background: #ea1a4b;
+        }
+        83% {
+          background: #b8005f;
+        }
+        92% {
+          background: #75006d;
+        }
+        to {
+          background: #006;
+        }
+      }
+    </style>
   </head>
   <body>
     <h1 class="site-heading">Calendar</h1>
     <div class="table-scroll">
       <table class="site-table" aria-label="Calendar for the Bhuddist era year"></table>
+    </div>
+    <div class="ui progress success">
+      <div class="bar">
+        <div class="progress"></div>
+      </div>
+      <div class="label">This year is 40%</div>
     </div>
     <script src="src/app.js" type="module"></script>
   </body>
